@@ -2,14 +2,10 @@
   "/": "pages/index.js",
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/_error": "pages/_error.js",
   "/admin": "pages/admin.js",
-  "/admin/chats": "pages/admin/chats.js",
-  "/admin/posts": "pages/admin/posts.js",
   "/api/sessionLogin": "pages/api/sessionLogin.js",
   "/api/sessionLogout": "pages/api/sessionLogout.js",
   "/login": "pages/login.js",
-  "/purchaser": "pages/purchaser.js",
   "/renter": "pages/renter.js",
-  "/renter/my-posts": "pages/renter/my-posts.js"
+  "/renter/support-chat": "pages/renter/support-chat.js"
 }
