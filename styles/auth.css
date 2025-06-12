@@ -1,0 +1,126 @@
+/* Auth Form Animations and Custom Styles */
+.auth-form-container {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.auth-form-input {
+  transition: all 0.3s ease;
+}
+
+.auth-form-input:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.auth-form-button {
+  transition: all 0.3s ease;
+}
+
+.auth-form-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.auth-form-button:active {
+  transform: translateY(0);
+}
+
+.auth-form-divider {
+  position: relative;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.auth-form-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e5e7eb;
+  z-index: 1;
+}
+
+.auth-form-divider span {
+  position: relative;
+  background: white;
+  padding: 0 1rem;
+  z-index: 2;
+}
+
+.auth-form-error {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Custom gradient background */
+.auth-gradient-bg {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+}
+
+/* Custom card hover effect */
+.auth-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Custom input focus ring */
+.auth-input-focus {
+  transition: all 0.3s ease;
+}
+
+.auth-input-focus:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Loading spinner animation */
+.auth-loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Custom checkbox style */
+.auth-checkbox {
+  transition: all 0.2s ease;
+}
+
+.auth-checkbox:checked {
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+}
+
+/* Custom select style */
+.auth-select {
+  transition: all 0.3s ease;
+}
+
+.auth-select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+} 
