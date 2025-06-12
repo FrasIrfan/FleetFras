@@ -109,6 +109,12 @@
       "namedRegex": "^/renter/my\\-posts(?:/)?$"
     },
     {
+      "page": "/renter/support-chat",
+      "regex": "^/renter/support\\-chat(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/renter/support\\-chat(?:/)?$"
+    },
+    {
       "page": "/signup",
       "regex": "^/signup(?:/)?$",
       "routeKeys": {},
@@ -118,19 +124,19 @@
   "dataRoutes": [
     {
       "page": "/",
-      "dataRouteRegex": "^/_next/data/ibGm\\-_ClcXFshS17p\\-jX6/index\\.json$"
+      "dataRouteRegex": "^/_next/data/e_kH7x3BEGHemBiXuG755/index\\.json$"
     },
     {
       "page": "/admin",
-      "dataRouteRegex": "^/_next/data/ibGm\\-_ClcXFshS17p\\-jX6/admin\\.json$"
+      "dataRouteRegex": "^/_next/data/e_kH7x3BEGHemBiXuG755/admin\\.json$"
     },
     {
       "page": "/purchaser",
-      "dataRouteRegex": "^/_next/data/ibGm\\-_ClcXFshS17p\\-jX6/purchaser\\.json$"
+      "dataRouteRegex": "^/_next/data/e_kH7x3BEGHemBiXuG755/purchaser\\.json$"
     },
     {
       "page": "/renter",
-      "dataRouteRegex": "^/_next/data/ibGm\\-_ClcXFshS17p\\-jX6/renter\\.json$"
+      "dataRouteRegex": "^/_next/data/e_kH7x3BEGHemBiXuG755/renter\\.json$"
     }
   ],
   "rsc": {

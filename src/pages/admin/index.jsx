@@ -24,9 +24,9 @@ export default function AdminDashboardPage() {
 
   const handleApprove = async (request) => {
     try {
-      // Update user role in users collection
+
       await updateDoc(doc(db, 'users', request.userId), { role: 'renter' });
-      // Update request status
+
       await updateDoc(doc(db, 'roleRequests', request.id), { status: 'approved' });
       setRequests(prev => prev.map(r => r.id === request.id ? { ...r, status: 'approved' } : r));
       console.log('[AdminDashboard] Approved request:', request);
@@ -47,7 +47,7 @@ export default function AdminDashboardPage() {
     }
   };
 
-  // Add header with Home and Logout
+
   const handleLogout = async () => {
     await logout();
     router.push('/login');
@@ -56,76 +56,64 @@ export default function AdminDashboardPage() {
   console.log('[AdminDashboard] currentUser:', currentUser);
 
   return (
-    <div style={{ padding: '2rem', minHeight: '100vh', background: '#f3f4f6', position: 'relative' }}>
-      <div style={{ maxWidth: 800, margin: '2rem auto' }}>
-        <div style={{
-          background: '#fff',
-          borderRadius: 12,
-          boxShadow: '0 2px 12px rgba(0,0,0,0.10)',
-          padding: '2rem',
-          color: '#222'
-        }}>
-          <h1 style={{ marginBottom: '0.5rem', color: '#222' }}>Welcome to the Admin Dashboard!</h1>
-          <p style={{ marginBottom: '2rem', color: '#444' }}>Your role: <strong>admin</strong></p>
-          <div style={{ marginBottom: '2rem' }}>
-            <button
-              style={{
-                padding: '0.75rem 1.5rem',
-                fontSize: '1rem',
-                background: '#4f46e5',
-                color: '#fff',
-                border: 'none',
-                borderRadius: 6,
-                cursor: 'pointer',
-                fontWeight: 500
-              }}
-              onClick={() => router.push('/admin/posts')}
-            >
-              📝 Manage Posts
-            </button>
-          </div>
-          <div style={{ marginTop: '2rem' }}>
-            <h2 style={{ marginBottom: '1rem', color: '#222' }}>Role Switch Requests</h2>
-            <div style={{
-              background: '#f9fafb',
-              borderRadius: 10,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-              padding: '1.5rem',
-              border: '1px solid #e5e7eb',
-              marginTop: 8
-            }}>
-              {loading ? (
-                <p>Loading requests...</p>
-              ) : requests.length === 0 ? (
-                <p>No role switch requests found.</p>
-              ) : (
-                <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '0.5rem' }}>
-                  <thead>
-                    <tr style={{ background: '#f3f4f6' }}>
-                      <th style={{ border: '1px solid #d1d5db', padding: '0.75rem', color: '#222', fontWeight: 600 }}>Email</th>
-                      <th style={{ border: '1px solid #d1d5db', padding: '0.75rem', color: '#222', fontWeight: 600 }}>Status</th>
-                      <th style={{ border: '1px solid #d1d5db', padding: '0.75rem', color: '#222', fontWeight: 600 }}>Actions</th>
+    <div className="min-h-screen bg-gray-100 p-2 md:p-6 flex flex-col items-center">
+      <div className="w-full max-w-2xl md:max-w-3xl bg-white rounded-2xl shadow-xl p-4 md:p-8 mt-4">
+        <h1 className="mb-2 text-xl md:text-2xl font-bold text-gray-900">Welcome to the Admin Dashboard!</h1>
+        <p className="mb-6 text-gray-700">Your role: <span className="font-semibold">admin</span></p>
+        <div className="mb-6">
+          <button
+            className="px-4 py-2 text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg font-medium w-full md:w-auto"
+            onClick={() => router.push('/admin/posts')}
+          >
+            📝 Manage Posts
+          </button>
+        </div>
+        <div>
+          <h2 className="mb-4 text-lg font-semibold text-gray-900">Role Switch Requests</h2>
+          <div className="overflow-x-auto rounded-lg border border-gray-200 bg-gray-50">
+            {loading ? (
+              <p className="p-4 text-center text-gray-500">Loading requests...</p>
+            ) : requests.length === 0 ? (
+              <p className="p-4 text-center text-gray-500">No role switch requests found.</p>
+            ) : (
+              <table className="min-w-full text-sm text-left">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="px-4 py-2 font-semibold text-gray-700">Email</th>
+                    <th className="px-4 py-2 font-semibold text-gray-700">Status</th>
+                    <th className="px-4 py-2 font-semibold text-gray-700">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {requests.map((req, idx) => (
+                    <tr key={req.id} className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                      <td className="px-4 py-2 break-all text-black">{req.email}</td>
+                      <td className={`px-4 py-2 font-semibold ${req.status === 'approved' ? 'text-green-600' : req.status === 'rejected' ? 'text-red-600' : 'text-orange-500'}`}>
+                        {req.status.charAt(0).toUpperCase() + req.status.slice(1)}
+                      </td>
+                      <td className="px-4 py-2 space-x-2">
+                        {req.status === 'pending' && (
+                          <>
+                            <button
+                              onClick={() => handleApprove(req)}
+                              className="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md mb-1 md:mb-0"
+                            >
+                              Approve
+                            </button>
+                            <button
+                              onClick={() => handleReject(req)}
+                              className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-md"
+                            >
+                              Reject
+                            </button>
+                          </>
+                        )}
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {requests.map((req, idx) => (
-                      <tr key={req.id} style={{ background: idx % 2 === 0 ? '#fff' : '#f3f4f6', transition: 'background 0.2s' }}>
-                        <td style={{ border: '1px solid #e5e7eb', padding: '0.75rem', color: '#444' }}>{req.email}</td>
-                        <td style={{ border: '1px solid #e5e7eb', padding: '0.75rem', color: req.status === 'approved' ? '#16a34a' : req.status === 'rejected' ? '#dc2626' : '#b45309', fontWeight: 600, textTransform: 'capitalize' }}>{req.status}</td>
-                        <td style={{ border: '1px solid #e5e7eb', padding: '0.75rem' }}>
-                          {req.status === 'pending' && (
-                            <>
-                              <button onClick={() => handleApprove(req)} style={{ marginRight: '0.5rem', background: '#4f46e5', color: '#fff', border: 'none', borderRadius: 6, padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: 500 }}>Approve</button>
-                              <button onClick={() => handleReject(req)} style={{ background: '#dc2626', color: '#fff', border: 'none', borderRadius: 6, padding: '0.5rem 1rem', cursor: 'pointer', fontWeight: 500 }}>Reject</button>
-                            </>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
-            </div>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
       </div>
@@ -163,7 +151,6 @@ export default function AdminDashboardPage() {
           💬
         </button>
       </div>
-      
     </div>
   );
 }
@@ -182,7 +169,7 @@ export async function getServerSideProps(context) {
     const db = admin.getFirestore();
     const userDoc = await db.collection('users').doc(decoded.uid).get();
     const userData = userDoc.data();
-    // Debug logging
+
     console.log('SSR: UID:', decoded.uid, 'userData:', userData);
     if (!userData || !userData.role || userData.role.toLowerCase() !== 'admin') {
       return { redirect: { destination: '/login', permanent: false } };

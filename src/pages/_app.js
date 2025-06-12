@@ -17,33 +17,27 @@ function Navbar() {
     router.push('/login');
   };
   return (
-    <nav style={{
-      width: '100%',
-      background: '#fff',
-      borderBottom: '1px solid #e5e7eb',
-      padding: '0.75rem 2rem',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      position: 'sticky',
-      top: 0,
-      zIndex: 2000
-    }}>
-      <div style={{ fontWeight: 700, color: '#4f46e5', fontSize: 20, cursor: 'pointer' }} onClick={() => router.push('/')}>FleetFras</div>
+    <nav className="w-full bg-white border-b border-gray-200 px-2 py-2 md:px-8 flex flex-col md:flex-row items-center justify-between sticky top-0 z-50">
+      <div
+        className="font-bold text-indigo-700 text-xl cursor-pointer mb-2 md:mb-0"
+        onClick={() => router.push('/')}
+      >
+        FleetFras
+      </div>
       {currentUser && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ color: '#222', fontWeight: 500, fontSize: 15, background: '#f3f4f6', borderRadius: 6, padding: '0.3rem 0.8rem', border: '1px solid #e5e7eb' }}>
-            {currentUser.displayName || 'No Name'}<br/>
-            <span style={{ color: '#4f46e5', fontWeight: 400, fontSize: 13 }}>{currentUser.email}</span>
+        <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 w-full md:w-auto">
+          <div className="flex flex-col md:flex-row items-center gap-1 bg-gray-100 rounded-md px-3 py-1 border border-gray-200 text-gray-900 text-sm font-medium w-full md:w-auto">
+            <span className="font-semibold">{currentUser.displayName || 'No Name'}</span>
+            <span className="text-indigo-600 text-xs md:ml-2 break-all">{currentUser.email}</span>
           </div>
           <button
-            style={{ padding: '0.5rem 1.2rem', background: '#4f46e5', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 500, cursor: 'pointer' }}
+            className="w-full md:w-auto px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium text-sm"
             onClick={() => router.push('/')}
           >
             Home
           </button>
           <button
-            style={{ padding: '0.5rem 1.2rem', background: '#dc2626', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 500, cursor: 'pointer' }}
+            className="w-full md:w-auto px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md font-medium text-sm"
             onClick={handleLogout}
           >
             Logout

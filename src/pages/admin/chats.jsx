@@ -66,67 +66,58 @@ export default function AdminChatsPage() {
   };
 
   if (!mounted) {
-    return <div style={{ padding: '2rem', textAlign: 'center' }}>Loading...</div>;
+    return <div className="p-8 text-center text-gray-500">Loading...</div>;
   }
 
   return (
-    <div style={{ padding: '2rem', minHeight: '100vh', background: '#f3f4f6', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <div style={{ width: '100%', maxWidth: 900, background: '#fff', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.10)', padding: '2rem', color: '#222', display: 'flex', gap: 32, minHeight: 600 }}>
-        <div style={{ width: 280, borderRight: '1px solid #eee', paddingRight: 24 }}>
-          <h2 style={{ color: '#4f46e5', marginBottom: 16 }}>All Chats</h2>
-          {chats.length === 0 ? <p style={{ color: '#888' }}>No chats yet.</p> :
+    <div className="min-h-screen bg-gray-100 p-2 md:p-6 flex flex-col items-center">
+      <div className="w-full max-w-5xl bg-white rounded-2xl shadow-xl p-4 md:p-8 mt-4 flex flex-col md:flex-row gap-8 min-h-[600px]">
+
+        <div className="w-full md:w-72 border-r border-gray-200 pr-0 md:pr-6 mb-6 md:mb-0">
+          <h2 className="text-lg font-semibold text-indigo-700 mb-4">All Chats</h2>
+          {chats.length === 0 ? <p className="text-gray-500">No chats yet.</p> :
             chats.map(chat => (
-              <div key={chat.id} style={{ marginBottom: 12, cursor: 'pointer', background: selectedChat?.id === chat.id ? '#e0e7ff' : '#f9fafb', borderRadius: 8, padding: 12, border: '1px solid #eee' }} onClick={() => setSelectedChat(chat)}>
-                <div style={{ fontWeight: 600, color: '#222' }}>
-                  {userInfo[chat.userId]?.name || 'User'}
-                </div>
-                <div style={{ color: '#444', fontSize: 14 }}>{userInfo[chat.userId]?.email || chat.userId}</div>
+              <div key={chat.id} className={`mb-3 cursor-pointer rounded-lg p-3 border ${selectedChat?.id === chat.id ? 'bg-indigo-100 border-indigo-400' : 'bg-gray-50 border-gray-200'}`} onClick={() => setSelectedChat(chat)}>
+                <div className="font-semibold text-gray-900">{userInfo[chat.userId]?.name || 'User'}</div>
+                <div className="text-gray-600 text-xs break-all">{userInfo[chat.userId]?.email || chat.userId}</div>
               </div>
             ))
           }
         </div>
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+
+        <div className="flex-1 flex flex-col">
           {selectedChat ? (
             <>
-              <h3 style={{ color: '#4f46e5', marginBottom: 8 }}>Chat with {selectedChat.userRole} ({selectedChat.userId})</h3>
-              <div style={{ flex: 1, overflowY: 'auto', marginBottom: 16, background: '#f9fafb', borderRadius: 8, padding: 12, border: '1px solid #eee' }}>
-                {messages.length === 0 ? <p style={{ color: '#888' }}>No messages yet.</p> :
+              <h3 className="text-indigo-700 font-semibold mb-2">Chat with {selectedChat.userRole} ({selectedChat.userId})</h3>
+              <div className="flex-1 overflow-y-auto mb-4 bg-gray-50 rounded-lg p-4 border border-gray-200 min-h-[300px]">
+                {messages.length === 0 ? <p className="text-gray-500">No messages yet.</p> :
                   messages.map((msg, idx) => (
-                    <div key={idx} style={{ marginBottom: 10, textAlign: msg.sender === 'admin' ? 'right' : 'left' }}>
-                      <span style={{
-                        display: 'inline-block',
-                        background: msg.sender === 'admin' ? '#4f46e5' : '#e0e7ff',
-                        color: msg.sender === 'admin' ? '#fff' : '#222',
-                        borderRadius: 16,
-                        padding: '0.5rem 1rem',
-                        fontWeight: 500,
-                        maxWidth: '70%',
-                        wordBreak: 'break-word',
-                      }}>{msg.text}</span>
+                    <div key={idx} className={`mb-2 flex ${msg.sender === 'admin' ? 'justify-end' : 'justify-start'}`}>
+                      <span className={`inline-block px-4 py-2 rounded-2xl font-medium max-w-[70%] break-words ${msg.sender === 'admin' ? 'bg-indigo-600 text-white' : 'bg-indigo-100 text-gray-900'}`}>{msg.text}</span>
                     </div>
                   ))
                 }
                 <div ref={messagesEndRef} />
               </div>
-              <div style={{ display: 'flex', gap: 8 }}>
+              <div className="flex gap-2 mt-2">
                 <input
                   type="text"
                   value={input}
                   onChange={e => setInput(e.target.value)}
                   placeholder="Type your message..."
-                  style={{ flex: 1, padding: '0.75rem', borderRadius: 8, border: '1px solid #bbb', fontSize: '1rem' }}
+                  className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
                   onKeyDown={e => { if (e.key === 'Enter') sendMessage(); }}
                 />
                 <button
                   onClick={sendMessage}
-                  style={{ padding: '0.75rem 1.5rem', background: '#4f46e5', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 600, cursor: 'pointer' }}
+                  className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold"
                 >
                   Send
                 </button>
               </div>
             </>
           ) : (
-            <div style={{ color: '#888', marginTop: 100, textAlign: 'center' }}>Select a chat to view messages.</div>
+            <div className="text-gray-500 mt-20 text-center">Select a chat to view messages.</div>
           )}
         </div>
       </div>
