@@ -1,21 +1,23 @@
 # FleetFras - Car Management System
 
 ## Overview
-FleetFras is a modern car management system built with Next.js and Firebase, designed to support multiple user roles: Admin, Renter, and Purchaser. The system facilitates car rentals, purchases, and management with a user-friendly interface and robust features.
+FleetFras is a modern car management system built with Next.js, Firebase, and Tailwind CSS. It supports multiple user roles (Admin, Renter, Purchaser) and provides a seamless experience for car rentals, purchases, and management.
 
 ## Features
-- **User Authentication**: Secure login and signup with email/password and Google authentication.
-- **Role-Based Access**: Different dashboards and functionalities for Admin, Renter, and Purchaser roles.
-- **Post Management**: Renters can create posts for car listings, which require admin approval before being visible to purchasers.
-- **Chat Support**: Real-time chat functionality for users to communicate with admins and other users.
-- **Role Switching**: Purchasers can request to become Renters, with admin approval.
-- **UI Consistency**: Modern and consistent UI across all pages, with a global top navbar for navigation.
+- **User Authentication:** Secure login/signup with email/password and Google.
+- **Role-Based Access:** Separate dashboards and permissions for Admin, Renter, and Purchaser.
+- **Post Management:** Renters can create car listings; admins approve/reject posts.
+- **Chat Support:** Real-time chat between users and admins, and between purchasers and renters.
+- **Role Switching:** Purchasers can request to become Renters (admin approval required).
+- **Modern UI:** Fully responsive, mobile-first design using Tailwind CSS.
+- **Global Navbar:** Sticky, responsive navbar with navigation and user info.
+- **SVG Icons:** All navigation and action icons use inline SVGs for performance and consistency.
 
 ## Project Structure
-- **`src/pages/`**: Contains all the pages of the application, including dashboards, login, signup, and role-specific pages.
-- **`components/`**: Reusable components like authentication forms, dashboard layouts, and protected routes.
-- **`context/`**: React context for managing authentication state.
-- **`lib/`**: Firebase configuration and helper functions.
+- **`src/pages/`**: All Next.js pages (dashboards, posts, chats, etc.).
+- **`components/`**: Reusable UI components (auth forms, protected routes, etc.).
+- **`context/`**: React context for authentication.
+- **`lib/`**: Firebase and admin SDK configuration.
 - **`styles/`**: Global and component-specific styles.
 
 ## Setup Instructions
@@ -30,16 +32,23 @@ FleetFras is a modern car management system built with Next.js and Firebase, des
    npm install
    ```
 
-3. **Environment Variables**:
-   - Create a `.env` file in the root directory with the following Firebase credentials:
+3. **Environment Variables:**
+   - Create a `.env` file in the root directory with the following:
      ```env
+     # Firebase client config
      NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
      NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
      NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
      NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+
+     # Firebase Admin SDK (for SSR and API routes)
+     FIREBASE_PROJECT_ID=your_project_id
+     FIREBASE_CLIENT_EMAIL=your_admin_sdk_client_email
+     FIREBASE_PRIVATE_KEY="your_admin_sdk_private_key"
      ```
+     > **Note:** The `FIREBASE_PRIVATE_KEY` may need to be escaped or wrapped in quotes if it contains newlines.
 
 4. **Run the Development Server**:
    ```bash
@@ -53,11 +62,14 @@ FleetFras is a modern car management system built with Next.js and Firebase, des
    ```
 
 ## Usage Flow
-- **Login/Signup**: Users can log in or sign up using email/password or Google authentication.
-- **Dashboard**: After logging in, users are redirected to their respective dashboards based on their role.
-- **Admin Dashboard**: Admins can manage users, approve/reject posts, and handle role switch requests.
-- **Renter Dashboard**: Renters can create posts, manage their listings, and communicate with purchasers.
-- **Purchaser Dashboard**: Purchasers can view approved posts, initiate chats with renters, and request role switches.
+- **Login/Signup:** Users authenticate and are redirected to their role-based dashboard.
+- **Admin:** Manages users, posts, and role switch requests.
+- **Renter:** Creates and manages car posts, chats with purchasers.
+- **Purchaser:** Views available posts, chats with renters, can request to become a renter.
+
+## Deployment
+- **Auto Deployment:** The `.next` build output is not tracked in git and is generated automatically by your deployment platform (e.g., Vercel, Netlify).
+- **.gitignore:** Make sure `.next` and `.env*` are in your `.gitignore`.
 
 ## Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
