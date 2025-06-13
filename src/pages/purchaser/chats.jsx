@@ -51,43 +51,47 @@ export default function PurchaserChatPage() {
   };
 
   return (
-    <div style={{ padding: '2rem', minHeight: '100vh', background: '#f3f4f6', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <div style={{ width: '100%', maxWidth: 500, background: '#fff', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.10)', padding: '2rem', color: '#222', display: 'flex', flexDirection: 'column', height: 600 }}>
-        <h2 style={{ marginBottom: 16, color: '#4f46e5' }}>Support Chat</h2>
-        <div style={{ flex: 1, overflowY: 'auto', marginBottom: 16, background: '#f9fafb', borderRadius: 8, padding: 12, border: '1px solid #eee' }}>
-          {messages.length === 0 ? <p style={{ color: '#888' }}>No messages yet.</p> :
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-blue-100 to-purple-100 flex flex-col items-center py-8 px-2 sm:px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-4 sm:p-8 flex flex-col h-[600px]">
+        <h2 className="mb-4 text-2xl font-bold text-indigo-600 text-center tracking-tight drop-shadow-sm">Support Chat</h2>
+        <div className="flex-1 flex flex-col justify-end overflow-y-auto mb-4 bg-gray-50 rounded-lg p-3 border border-gray-100 shadow-inner">
+          {messages.length === 0 ? (
+            <p className="text-gray-400 text-center mt-8">No messages yet.</p>
+          ) : (
             messages.map((msg, idx) => (
-              <div key={idx} style={{ marginBottom: 10, textAlign: msg.sender === 'admin' ? 'right' : 'left' }}>
-                <div style={{ fontSize: 12, color: '#888', marginBottom: 2, textAlign: msg.sender === 'admin' ? 'right' : 'left' }}>
-                  {msg.sender === 'admin' ? 'Admin:' : 'You:'}
+              <div
+                key={idx}
+                className={`mb-3 flex ${msg.sender === 'purchaser' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div className="max-w-[70%]">
+                  <div className={`text-xs mb-1 ${msg.sender === 'purchaser' ? 'text-indigo-500 text-right' : 'text-gray-500 text-left'}`}>{msg.sender === 'purchaser' ? 'You:' : 'Admin:'}</div>
+                  <span
+                    className={`inline-block rounded-2xl px-4 py-2 font-medium shadow-md break-words transition-all ${
+                      msg.sender === 'purchaser'
+                        ? 'bg-indigo-600 text-white rounded-br-none'
+                        : 'bg-indigo-100 text-gray-900 rounded-bl-none'
+                    }`}
+                  >
+                    {msg.text}
+                  </span>
                 </div>
-                <span style={{
-                  display: 'inline-block',
-                  background: msg.sender === 'admin' ? '#4f46e5' : '#e0e7ff',
-                  color: msg.sender === 'admin' ? '#fff' : '#222',
-                  borderRadius: 16,
-                  padding: '0.5rem 1rem',
-                  fontWeight: 500,
-                  maxWidth: '70%',
-                  wordBreak: 'break-word',
-                }}>{msg.text}</span>
               </div>
             ))
-          }
+          )}
           <div ref={messagesEndRef} />
         </div>
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div className="flex gap-2 mt-2 text-black">
           <input
             type="text"
             value={input}
             onChange={e => setInput(e.target.value)}
             placeholder="Type your message..."
-            style={{ flex: 1, padding: '0.75rem', borderRadius: 8, border: '1px solid #bbb', fontSize: '1rem' }}
+            className="flex-1 rounded-xl border border-gray-300 px-4 py-3 text-base focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all shadow-sm bg-white"
             onKeyDown={e => { if (e.key === 'Enter') sendMessage(); }}
           />
           <button
             onClick={sendMessage}
-            style={{ padding: '0.75rem 1.5rem', background: '#4f46e5', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 600, cursor: 'pointer' }}
+            className="rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-white font-semibold shadow-lg hover:from-indigo-600 hover:to-purple-600 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400"
           >
             Send
           </button>

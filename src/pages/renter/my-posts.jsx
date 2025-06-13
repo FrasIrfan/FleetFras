@@ -60,105 +60,83 @@ export default function MyPostsPage() {
   };
 
   return (
-    <div style={{ padding: '2rem', minHeight: '100vh', background: '#f3f4f6' }}>
-      <div style={{ maxWidth: 900, margin: '2rem auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', marginBottom: '1.5rem' }}>
-        </div>
-        <div style={{ background: '#fff', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.10)', padding: '2rem', color: '#222' }}>
-          <h1 style={{ marginBottom: '1.5rem', color: '#222' }}>My Posts</h1>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-blue-100 to-purple-100 py-8 px-2 sm:px-4">
+      <div className="max-w-5xl mx-auto">
+        <div className="rounded-2xl bg-white shadow-2xl p-6 sm:p-10">
+          <h1 className="mb-6 text-2xl sm:text-3xl font-bold text-indigo-700 text-center tracking-tight drop-shadow">My Posts</h1>
           {loading ? (
-            <p>Loading posts...</p>
+            <p className="text-gray-600 text-center">Loading posts...</p>
           ) : posts.length === 0 ? (
-            <p>No posts found.</p>
+            <p className="text-gray-400 text-center">No posts found.</p>
           ) : (
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginTop: '1rem' }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
               {posts.map(post => (
-                <div key={post.id} style={{ flex: '1 1 280px', minWidth: 280, maxWidth: 340, background: '#f9fafb', borderRadius: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '1.5rem', border: '1px solid #e5e7eb', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative' }}>
+                <div key={post.id} className="flex flex-col justify-between bg-gray-50 rounded-xl border border-gray-200 shadow-md p-6 relative">
                   <div>
-                    <div style={{ fontWeight: 700, color: '#4f46e5', fontSize: '1.1rem', marginBottom: 6 }}>
-                      ${post.price}
-                    </div>
-                    <h2 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#222', marginBottom: 8 }}>{post.title}</h2>
-                    <p style={{ color: '#444', marginBottom: 12 }}>{post.description}</p>
-                    <div style={{ color: '#4f46e5', fontSize: 13, marginBottom: 6 }}>
-                      Owner: {currentUser?.displayName || 'No Name'} (<span style={{ color: '#6366f1' }}>{currentUser?.email || ''}</span>)
+                    <div className="font-bold text-indigo-600 text-lg mb-1">${post.price}</div>
+                    <h2 className="text-xl font-semibold text-gray-900 mb-2">{post.title}</h2>
+                    <p className="text-gray-600 mb-3">{post.description}</p>
+                    <div className="text-indigo-600 text-xs mb-2">
+                      Owner: {currentUser?.displayName || 'No Name'} (<span className="text-indigo-400">{currentUser?.email || ''}</span>)
                     </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>
-                    <span style={{
-                      padding: '0.3rem 0.9rem',
-                      borderRadius: 20,
-                      fontWeight: 600,
-                      fontSize: '0.95rem',
-                      background: post.status === 'approved' ? '#e0fbe3' : post.status === 'rejected' ? '#fee2e2' : '#fef9c3',
-                      color: post.status === 'approved' ? '#16a34a' : post.status === 'rejected' ? '#dc2626' : '#b45309',
-                      border: '1px solid',
-                      borderColor: post.status === 'approved' ? '#bbf7d0' : post.status === 'rejected' ? '#fecaca' : '#fde68a',
-                    }}>{post.status}</span>
+                  <div className="flex items-center mt-2">
+                    <span className={`px-4 py-1 rounded-full font-semibold text-xs border mr-2 ${post.status === 'approved' ? 'bg-green-100 text-green-700 border-green-200' : post.status === 'rejected' ? 'bg-red-100 text-red-700 border-red-200' : 'bg-yellow-100 text-yellow-700 border-yellow-200'}`}>{post.status}</span>
                   </div>
                   <button
-                    style={{ marginTop: 12, background: '#4f46e5', color: '#fff', border: 'none', borderRadius: 6, padding: '0.5rem 1rem', fontWeight: 500, cursor: 'pointer' }}
+                    className="mt-4 rounded-lg bg-indigo-600 text-white px-4 py-2 font-medium shadow hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
                     onClick={() => setShowChatsForPost(post.id)}
                   >
                     View Chats
                   </button>
                   {showChatsForPost === post.id && (
-                    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.25)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <div style={{ background: '#fff', borderRadius: 12, boxShadow: '0 2px 16px rgba(0,0,0,0.18)', padding: '2rem', minWidth: 400, maxWidth: 600, width: '100%', maxHeight: 600, overflow: 'auto', position: 'relative' }}>
-                        <button style={{ position: 'absolute', top: 12, right: 12, background: '#eee', border: 'none', borderRadius: 6, padding: '0.3rem 0.8rem', cursor: 'pointer', fontWeight: 600 }} onClick={() => setShowChatsForPost(null)}>X</button>
-                        <h3 style={{ color: '#4f46e5', marginBottom: 12 }}>Chats for: {post.title}</h3>
-                        {chats.length === 0 ? <p style={{ color: '#888' }}>No chats for this post yet.</p> : (
-                          <div style={{ display: 'flex', gap: 16 }}>
-                            <div style={{ minWidth: 120 }}>
+                    <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center">
+                      <div className="bg-white rounded-2xl shadow-2xl p-6 min-w-[320px] max-w-lg w-full max-h-[80vh] overflow-auto relative">
+                        <button className="absolute top-3 right-3 bg-gray-200 hover:bg-gray-300 rounded-lg px-3 py-1 font-bold text-gray-700" onClick={() => setShowChatsForPost(null)}>X</button>
+                        <h3 className="text-indigo-600 font-bold mb-4">Chats for: {post.title}</h3>
+                        {chats.length === 0 ? <p className="text-gray-400">No chats for this post yet.</p> : (
+                          <div className="flex gap-4">
+                            <div className="min-w-[100px]">
                               {chats.map(chat => (
-                                <div key={chat.id} style={{ marginBottom: 10, cursor: 'pointer', background: selectedChat?.id === chat.id ? '#e0e7ff' : '#f9fafb', borderRadius: 8, padding: 8, border: '1px solid #eee' }} onClick={() => setSelectedChat(chat)}>
+                                <div key={chat.id} className={`mb-2 cursor-pointer ${selectedChat?.id === chat.id ? 'bg-indigo-100 border-indigo-300' : 'bg-gray-50 border-gray-100'} rounded-lg p-2 border transition-colors`} onClick={() => setSelectedChat(chat)}>
                                   Purchaser: {chat.userId}
                                 </div>
                               ))}
                             </div>
-                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                            <div className="flex-1 flex flex-col">
                               {selectedChat ? (
                                 <>
-                                  <div style={{ flex: 1, overflowY: 'auto', marginBottom: 12, background: '#f9fafb', borderRadius: 8, padding: 10, border: '1px solid #eee', minHeight: 200, maxHeight: 250 }}>
-                                    {messages.length === 0 ? <p style={{ color: '#888' }}>No messages yet.</p> :
+                                  <div className="flex-1 flex flex-col justify-end overflow-y-auto mb-3 bg-gray-50 rounded-lg p-3 border border-gray-100 shadow-inner min-h-[150px] max-h-[250px]">
+                                    {messages.length === 0 ? <p className="text-gray-400 text-center mt-8">No messages yet.</p> :
                                       messages.map((msg, idx) => (
-                                        <div key={idx} style={{ marginBottom: 10, textAlign: msg.sender === currentUser.uid ? 'right' : 'left' }}>
-                                          <div style={{ fontSize: 12, color: '#888', marginBottom: 2, textAlign: msg.sender === currentUser.uid ? 'right' : 'left' }}>
-                                            {msg.sender === currentUser.uid ? 'You:' : 'Purchaser:'}
+                                        <div key={idx} className={`mb-3 flex ${msg.sender === currentUser.uid ? 'justify-end' : 'justify-start'}`}>
+                                          <div className="max-w-[70%]">
+                                            <div className={`text-xs mb-1 ${msg.sender === currentUser.uid ? 'text-indigo-500 text-right' : 'text-gray-500 text-left'}`}>{msg.sender === currentUser.uid ? 'You:' : 'Purchaser:'}</div>
+                                            <span className={`inline-block rounded-2xl px-4 py-2 font-medium shadow-md break-words transition-all ${msg.sender === currentUser.uid ? 'bg-indigo-600 text-white rounded-br-none' : 'bg-indigo-100 text-gray-900 rounded-bl-none'}`}>{msg.text}</span>
                                           </div>
-                                          <span style={{
-                                            display: 'inline-block',
-                                            background: msg.sender === currentUser.uid ? '#4f46e5' : '#e0e7ff',
-                                            color: msg.sender === currentUser.uid ? '#fff' : '#222',
-                                            borderRadius: 16,
-                                            padding: '0.5rem 1rem',
-                                            fontWeight: 500,
-                                            maxWidth: '70%',
-                                            wordBreak: 'break-word',
-                                          }}>{msg.text}</span>
                                         </div>
                                       ))
                                     }
                                   </div>
-                                  <div style={{ display: 'flex', gap: 8 }}>
+                                  <div className="flex gap-2 mt-2 text-black">
                                     <input
                                       type="text"
                                       value={input}
                                       onChange={e => setInput(e.target.value)}
                                       placeholder="Type your message..."
-                                      style={{ flex: 1, padding: '0.75rem', borderRadius: 8, border: '1px solid #bbb', fontSize: '1rem' }}
+                                      className="flex-1 rounded-xl border border-gray-300 px-4 py-3 text-base focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all shadow-sm bg-white"
                                       onKeyDown={e => { if (e.key === 'Enter') sendMessage(); }}
                                     />
                                     <button
                                       onClick={sendMessage}
-                                      style={{ padding: '0.75rem 1.5rem', background: '#4f46e5', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 600, cursor: 'pointer' }}
+                                      className="rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-white font-semibold shadow-lg hover:from-indigo-600 hover:to-purple-600 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400"
                                     >
                                       Send
                                     </button>
                                   </div>
                                 </>
                               ) : (
-                                <div style={{ color: '#888', marginTop: 40, textAlign: 'center' }}>Select a chat to view messages.</div>
+                                <div className="text-gray-400 mt-10 text-center">Select a chat to view messages.</div>
                               )}
                             </div>
                           </div>

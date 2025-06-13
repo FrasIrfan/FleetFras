@@ -18,7 +18,7 @@ export async function getServerSideProps(context) {
     const db = admin.getFirestore();
     const userDoc = await db.collection('users').doc(decoded.uid).get();
     const userData = userDoc.data();
-    // Debug logging
+
     console.log('SSR: UID:', decoded.uid, 'userData:', userData);
     if (!userData || !userData.role || userData.role.toLowerCase() !== 'purchaser') {
       return { redirect: { destination: '/login', permanent: false } };
@@ -87,14 +87,18 @@ export default function PurchaserDashboardPage() {
 
 
   return (
-    <div style={{ padding: '2rem', minHeight: '100vh', background: '#f3f4f6' }}>
-      <div style={{ maxWidth: 600, margin: '2rem auto' }}>
-        <div style={{ background: '#fff', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.10)', padding: '2rem', color: '#222' }}>
-          <h1 style={{ marginBottom: '0.5rem', color: '#222' }}>Welcome to the Purchaser Dashboard!</h1>
-          <p style={{ marginBottom: '2rem', color: '#444' }}>Your role: <strong>purchaser</strong></p>
-          <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
+    <div className="min-h-screen bg-gray-100 px-4 py-8 sm:px-6 md:px-8">
+      <div className="mx-auto max-w-2xl">
+        <div className="rounded-xl bg-white p-4 shadow-md sm:p-6 md:p-8">
+          <h1 className="mb-2 text-2xl font-semibold text-gray-900 sm:text-3xl">
+            Welcome to the Purchaser Dashboard!
+          </h1>
+          <p className="mb-6 text-gray-600">
+            Your role: <span className="font-medium">purchaser</span>
+          </p>
+          <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:gap-4">
             <button
-              style={{ padding: '0.75rem 1.5rem', fontSize: '1rem', background: '#4f46e5', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer', fontWeight: 500 }}
+              className="w-full rounded-lg bg-indigo-600 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto sm:text-base"
               onClick={() => router.push('/purchaser/posts')}
             >
               🔍 View Available Posts
@@ -102,51 +106,41 @@ export default function PurchaserDashboardPage() {
           </div>
           {userRole === 'purchaser' && (
             <button
-              style={{ marginTop: 16, padding: '0.5rem 1.2rem', background: '#6366f1', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 500, cursor: 'pointer' }}
+              className="mt-4 w-full rounded-lg bg-indigo-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto sm:text-base"
               onClick={handleSwitchToRenter}
             >
               Switch to Renter
             </button>
           )}
-          <div style={{ marginTop: '2rem' }}>
+          <div className="mt-8">
             {loading ? (
-              <p>Loading role switch status...</p>
+              <p className="text-gray-600">Loading role switch status...</p>
             ) : requestStatus === 'pending' ? (
-              <p>Your request to become a renter is <strong>pending approval</strong>.</p>
+              <p className="text-gray-600">
+                Your request to become a renter is <span className="font-medium">pending approval</span>.
+              </p>
             ) : requestStatus === 'approved' ? (
-              <p>Your request to become a renter has been <strong>approved</strong>.</p>
+              <p className="text-gray-600">
+                Your request to become a renter has been <span className="font-medium">approved</span>.
+              </p>
             ) : requestStatus === 'rejected' ? (
-              <p>Your request to become a renter was <strong>rejected</strong>.</p>
+              <p className="text-gray-600">
+                Your request to become a renter was <span className="font-medium">rejected</span>.
+              </p>
             ) : (
-              <button onClick={handleRoleSwitchRequest} style={{ padding: '0.5rem 1rem', fontSize: '1rem', background: '#6366f1', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer', fontWeight: 500 }}>
+              <button
+                onClick={handleRoleSwitchRequest}
+                className="w-full rounded-lg bg-indigo-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto sm:text-base"
+              >
                 Request to become a Renter
               </button>
             )}
           </div>
         </div>
       </div>
-      <div style={{
-        position: 'fixed',
-        bottom: 32,
-        right: 32,
-        zIndex: 1000
-      }}>
+      <div className="fixed bottom-4 right-4 z-50 sm:bottom-8 sm:right-8">
         <button
-          style={{
-            background: '#4f46e5',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '50%',
-            width: 60,
-            height: 60,
-            fontSize: 28,
-            boxShadow: '0 4px 16px rgba(79,70,229,0.15)',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontWeight: 700
-          }}
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-indigo-600 text-2xl font-bold text-white shadow-lg transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:h-16 sm:w-16 sm:text-3xl"
           onClick={() => router.push('/purchaser/chats')}
           title="Support Chat"
         >
