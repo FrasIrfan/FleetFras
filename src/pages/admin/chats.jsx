@@ -66,20 +66,20 @@ export default function AdminChatsPage() {
   };
 
   if (!mounted) {
-    return <div className="p-8 text-center text-gray-500">Loading...</div>;
+    return <div className="p-8 text-center text-slate-500">Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-2 md:p-6 flex flex-col items-center">
-      <div className="w-full max-w-5xl bg-white rounded-2xl shadow-xl p-4 md:p-8 mt-4 flex flex-col md:flex-row gap-8 min-h-[600px]">
+    <div className="ff-page">
+      <div className="ff-shell mt-2 flex min-h-[600px] flex-col gap-8 md:mt-4 md:flex-row">
 
-        <div className="w-full md:w-72 border-r border-gray-200 pr-0 md:pr-6 mb-6 md:mb-0">
-          <h2 className="text-lg font-semibold text-indigo-700 mb-4">All Chats</h2>
-          {chats.length === 0 ? <p className="text-gray-500">No chats yet.</p> :
+        <div className="mb-6 w-full border-r border-slate-200 pr-0 md:mb-0 md:w-72 md:pr-6">
+          <h2 className="mb-4 text-lg font-semibold text-purple-800">All Chats</h2>
+          {chats.length === 0 ? <p className="text-slate-500">No chats yet.</p> :
             chats.map(chat => (
-              <div key={chat.id} className={`mb-3 cursor-pointer rounded-lg p-3 border ${selectedChat?.id === chat.id ? 'bg-indigo-100 border-indigo-400' : 'bg-gray-50 border-gray-200'}`} onClick={() => setSelectedChat(chat)}>
-                <div className="font-semibold text-gray-900">{userInfo[chat.userId]?.name || 'User'}</div>
-                <div className="text-gray-600 text-xs break-all">{userInfo[chat.userId]?.email || chat.userId}</div>
+              <div key={chat.id} className={`mb-3 cursor-pointer rounded-xl border p-3 ${selectedChat?.id === chat.id ? 'border-purple-300 bg-purple-50' : 'bg-slate-50'}`} style={selectedChat?.id === chat.id ? undefined : { borderColor: 'var(--ff-border)' }} onClick={() => setSelectedChat(chat)}>
+                <div className="font-semibold text-slate-950">{userInfo[chat.userId]?.name || 'User'}</div>
+                <div className="break-all text-xs text-slate-500">{userInfo[chat.userId]?.email || chat.userId}</div>
               </div>
             ))
           }
@@ -88,12 +88,12 @@ export default function AdminChatsPage() {
         <div className="flex-1 flex flex-col">
           {selectedChat ? (
             <>
-              <h3 className="text-indigo-700 font-semibold mb-2">Chat with {selectedChat.userRole} ({selectedChat.userId})</h3>
-              <div className="flex-1 overflow-y-auto mb-4 bg-gray-50 rounded-lg p-4 border border-gray-200 min-h-[300px]">
-                {messages.length === 0 ? <p className="text-gray-500">No messages yet.</p> :
+              <h3 className="mb-2 font-semibold text-slate-950">Chat with {selectedChat.userRole} ({selectedChat.userId})</h3>
+              <div className="mb-4 min-h-[300px] flex-1 overflow-y-auto rounded-lg border bg-slate-50 p-4" style={{ borderColor: 'var(--ff-border)' }}>
+                {messages.length === 0 ? <p className="text-slate-500">No messages yet.</p> :
                   messages.map((msg, idx) => (
                     <div key={idx} className={`mb-2 flex ${msg.sender === 'admin' ? 'justify-end' : 'justify-start'}`}>
-                      <span className={`inline-block px-4 py-2 rounded-2xl font-medium max-w-[70%] break-words ${msg.sender === 'admin' ? 'bg-indigo-600 text-white' : 'bg-indigo-100 text-gray-900'}`}>{msg.text}</span>
+                      <span className={`inline-block max-w-[70%] break-words rounded-2xl px-4 py-2 font-medium ${msg.sender === 'admin' ? 'bg-purple-700 text-white' : 'bg-white text-slate-900 border border-slate-200'}`}>{msg.text}</span>
                     </div>
                   ))
                 }
@@ -105,19 +105,19 @@ export default function AdminChatsPage() {
                   value={input}
                   onChange={e => setInput(e.target.value)}
                   placeholder="Type your message..."
-                  className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  className="ff-input flex-1"
                   onKeyDown={e => { if (e.key === 'Enter') sendMessage(); }}
                 />
                 <button
                   onClick={sendMessage}
-                  className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold"
+                  className="ff-button-primary px-6"
                 >
                   Send
                 </button>
               </div>
             </>
           ) : (
-            <div className="text-gray-500 mt-20 text-center">Select a chat to view messages.</div>
+            <div className="mt-20 text-center text-slate-500">Select a chat to view messages.</div>
           )}
         </div>
       </div>

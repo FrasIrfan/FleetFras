@@ -56,32 +56,45 @@ export default function RenterDashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 px-4 py-8 sm:px-6 md:px-8">
-      <div className="mx-auto max-w-2xl">
-        <div className="rounded-xl bg-white p-4 shadow-md sm:p-6 md:p-8">
-          <h1 className="mb-2 text-2xl font-semibold text-gray-900 sm:text-3xl">
-            Welcome to the Renter Dashboard!
-          </h1>
-          <p className="mb-6 text-gray-600">
-            Your role: <span className="font-medium">renter</span>
-          </p>
+    <div className="ff-page">
+      <div className="mx-auto max-w-5xl">
+        <div className="ff-shell">
+          <div className="ff-page-header">
+            <div>
+              <p className="ff-kicker">Renter workspace</p>
+              <h1 className="ff-title">Manage your listings clearly.</h1>
+              <p className="ff-subtitle mt-3">Your role: <span className="font-semibold text-slate-800">renter</span></p>
+            </div>
+          </div>
+          <div className="mb-8 grid gap-4 sm:grid-cols-2">
+            <div className="ff-card">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-purple-700">Inventory</p>
+              <h2 className="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">My Posts</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-600">Review listing status and continue conversations from your posts.</p>
+            </div>
+            <div className="ff-card">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-purple-700">Create</p>
+              <h2 className="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">New Listing</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-600">Submit a vehicle listing for admin approval.</p>
+            </div>
+          </div>
           <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:gap-4">
             <button
-              className="w-full rounded-lg bg-indigo-600 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto sm:text-base"
+              className="ff-button-primary w-full sm:w-auto"
               onClick={() => router.push('/renter/my-posts')}
             >
-              📦 My Posts
+              My Posts
             </button>
             <button
-              className="w-full rounded-lg bg-indigo-500 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto sm:text-base"
+              className="ff-button-secondary w-full sm:w-auto"
               onClick={() => router.push('/renter/create-post')}
             >
-              ➕ Create Post
+              Create Post
             </button>
           </div>
           {userRole === 'renter' && (
             <button
-              className="mt-4 w-full rounded-lg bg-indigo-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto sm:text-base"
+              className="ff-button-secondary mt-4 w-full sm:w-auto"
               onClick={handleSwitchToPurchaser}
             >
               Switch to Purchaser
@@ -89,15 +102,7 @@ export default function RenterDashboardPage() {
           )}
         </div>
       </div>
-      <div className="fixed bottom-4 right-4 z-50 sm:bottom-8 sm:right-8">
-        <button
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-indigo-600 text-2xl font-bold text-white shadow-lg transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:h-16 sm:w-16 sm:text-3xl"
-          onClick={() => router.push('/renter/support-chat')}
-          title="Support Chat"
-        >
-          💬
-        </button>
-      </div>
+      <button className="ff-fab" onClick={() => router.push('/renter/support-chat')} title="Support Chat">💬</button>
     </div>
   );
 } 

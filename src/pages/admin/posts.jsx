@@ -44,30 +44,30 @@ export default function AdminPostsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-2 md:p-6 flex flex-col items-center">
-      <div className="w-full max-w-6xl bg-white rounded-2xl shadow-xl p-4 md:p-8 mt-4">
-        <h1 className="mb-6 text-xl md:text-2xl font-bold text-gray-900">Manage All Posts</h1>
+    <div className="ff-page">
+      <div className="ff-shell mt-2 md:mt-4">
+        <h1 className="ff-title mb-6">Manage All Posts</h1>
         {loading ? (
-          <p className="p-4 text-center text-gray-500">Loading posts...</p>
+          <p className="p-4 text-center text-slate-500">Loading posts...</p>
         ) : posts.length === 0 ? (
-          <p className="p-4 text-center text-gray-500">No posts found.</p>
+          <p className="p-4 text-center text-slate-500">No posts found.</p>
         ) : (
-          <div className="flex flex-col md:flex-row flex-wrap gap-4 md:gap-6 mt-4">
+          <div className="mt-4 flex flex-col flex-wrap gap-4 md:flex-row md:gap-6">
             {posts.map(post => (
-              <div key={post.id} className="flex-1 min-w-[260px] max-w-sm bg-gray-50 rounded-xl shadow-md border border-gray-200 p-4 flex flex-col justify-between">
+              <div key={post.id} className="ff-card flex min-w-[260px] max-w-sm flex-1 flex-col justify-between">
                 <div>
-                  <div className="font-bold text-indigo-700 text-lg mb-2">${post.price}</div>
-                  <h2 className="text-base font-semibold text-gray-900 mb-2">{post.title}</h2>
-                  <p className="text-gray-700 mb-3 break-words">{post.description}</p>
+                  <div className="mb-2 text-lg font-bold text-purple-700">${post.price}</div>
+                  <h2 className="mb-2 text-base font-semibold text-slate-950">{post.title}</h2>
+                  <p className="mb-3 break-words text-slate-600">{post.description}</p>
                 </div>
                 <div className="flex flex-col sm:flex-row items-center mt-2 justify-between gap-2">
-                  <span className={`px-3 py-1 rounded-full font-semibold text-sm border ${post.status === 'approved' ? 'bg-green-50 text-green-700 border-green-200' : post.status === 'rejected' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-yellow-50 text-orange-600 border-yellow-200'}`}>
+                  <span className={`ff-status-chip text-sm ${post.status === 'approved' ? 'border-green-200 bg-green-50 text-green-700' : post.status === 'rejected' ? 'border-red-200 bg-red-50 text-red-700' : 'border-yellow-200 bg-yellow-50 text-orange-600'}`}>
                     {post.status.charAt(0).toUpperCase() + post.status.slice(1)}
                   </span>
                   {post.status === 'pending' && (
                     <div className="flex gap-2 mt-2 sm:mt-0">
-                      <button onClick={() => handleApprove(post)} className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md px-3 py-1 font-medium">Approve</button>
-                      <button onClick={() => handleReject(post)} className="bg-red-600 hover:bg-red-700 text-white rounded-md px-3 py-1 font-medium">Reject</button>
+                      <button onClick={() => handleApprove(post)} className="ff-button-primary px-3 py-1">Approve</button>
+                      <button onClick={() => handleReject(post)} className="ff-button-danger px-3 py-1">Reject</button>
                     </div>
                   )}
                 </div>

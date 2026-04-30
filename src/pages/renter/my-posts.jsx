@@ -14,6 +14,7 @@ export default function MyPostsPage() {
   const [selectedChat, setSelectedChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -31,12 +32,30 @@ export default function MyPostsPage() {
     if (!showChatsForPost) return;
     const fetchChats = async () => {
       const chatsSnapshot = await getDocs(query(collection(db, 'chats'), where('postId', '==', showChatsForPost)));
-      setChats(chatsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      const chatList = chatsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setChats(chatList);
+
+      const usersSnapshot = await getDocs(collection(db, 'users'));
+      const userMap = {};
+      usersSnapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        userMap[docSnap.id] = {
+          name: data.displayName || data.name || 'Purchaser',
+          email: data.email || '',
+        };
+      });
+      setUserInfo(userMap);
       setSelectedChat(null);
       setMessages([]);
     };
     fetchChats();
   }, [showChatsForPost]);
+
+  const getPurchaserLabel = (userId) => {
+    const user = userInfo[userId];
+    if (!user) return 'Purchaser';
+    return user.email || user.name || 'Purchaser';
+  };
 
   useEffect(() => {
     if (!selectedChat) return;
@@ -60,59 +79,60 @@ export default function MyPostsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-blue-100 to-purple-100 py-8 px-2 sm:px-4">
+    <div className="ff-page">
       <div className="max-w-5xl mx-auto">
-        <div className="rounded-2xl bg-white shadow-2xl p-6 sm:p-10">
-          <h1 className="mb-6 text-2xl sm:text-3xl font-bold text-indigo-700 text-center tracking-tight drop-shadow">My Posts</h1>
+        <div className="ff-shell">
+          <h1 className="ff-title mb-6 text-center">My Posts</h1>
           {loading ? (
-            <p className="text-gray-600 text-center">Loading posts...</p>
+            <p className="text-center text-slate-600">Loading posts...</p>
           ) : posts.length === 0 ? (
-            <p className="text-gray-400 text-center">No posts found.</p>
+            <p className="text-center text-slate-400">No posts found.</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
               {posts.map(post => (
-                <div key={post.id} className="flex flex-col justify-between bg-gray-50 rounded-xl border border-gray-200 shadow-md p-6 relative">
+                <div key={post.id} className="ff-card relative flex flex-col justify-between p-6">
                   <div>
-                    <div className="font-bold text-indigo-600 text-lg mb-1">${post.price}</div>
-                    <h2 className="text-xl font-semibold text-gray-900 mb-2">{post.title}</h2>
-                    <p className="text-gray-600 mb-3">{post.description}</p>
-                    <div className="text-indigo-600 text-xs mb-2">
-                      Owner: {currentUser?.displayName || 'No Name'} (<span className="text-indigo-400">{currentUser?.email || ''}</span>)
+                    <div className="mb-1 text-lg font-bold text-purple-700">${post.price}</div>
+                    <h2 className="mb-2 text-xl font-semibold text-slate-950">{post.title}</h2>
+                    <p className="mb-3 text-slate-600">{post.description}</p>
+                    <div className="mb-2 text-xs text-purple-700">
+                      Owner: {currentUser?.displayName || 'No Name'} (<span className="text-slate-500">{currentUser?.email || ''}</span>)
                     </div>
                   </div>
                   <div className="flex items-center mt-2">
-                    <span className={`px-4 py-1 rounded-full font-semibold text-xs border mr-2 ${post.status === 'approved' ? 'bg-green-100 text-green-700 border-green-200' : post.status === 'rejected' ? 'bg-red-100 text-red-700 border-red-200' : 'bg-yellow-100 text-yellow-700 border-yellow-200'}`}>{post.status}</span>
+                    <span className={`ff-status-chip mr-2 px-4 py-1 ${post.status === 'approved' ? 'border-green-200 bg-green-100 text-green-700' : post.status === 'rejected' ? 'border-red-200 bg-red-100 text-red-700' : 'border-yellow-200 bg-yellow-100 text-yellow-700'}`}>{post.status}</span>
                   </div>
                   <button
-                    className="mt-4 rounded-lg bg-indigo-600 text-white px-4 py-2 font-medium shadow hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    className="ff-button-primary mt-4"
                     onClick={() => setShowChatsForPost(post.id)}
                   >
                     View Chats
                   </button>
                   {showChatsForPost === post.id && (
                     <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center">
-                      <div className="bg-white rounded-2xl shadow-2xl p-6 min-w-[320px] max-w-lg w-full max-h-[80vh] overflow-auto relative">
-                        <button className="absolute top-3 right-3 bg-gray-200 hover:bg-gray-300 rounded-lg px-3 py-1 font-bold text-gray-700" onClick={() => setShowChatsForPost(null)}>X</button>
-                        <h3 className="text-indigo-600 font-bold mb-4">Chats for: {post.title}</h3>
-                        {chats.length === 0 ? <p className="text-gray-400">No chats for this post yet.</p> : (
-                          <div className="flex gap-4">
-                            <div className="min-w-[100px]">
+                      <div className="relative max-h-[80vh] w-full min-w-[320px] max-w-lg overflow-auto rounded-2xl border bg-white p-6 shadow-2xl" style={{ borderColor: 'var(--ff-border)' }}>
+                        <button className="absolute right-3 top-3 rounded-full bg-slate-100 px-3 py-1 font-bold text-slate-700 hover:bg-slate-200" onClick={() => setShowChatsForPost(null)}>X</button>
+                        <h3 className="mb-4 font-bold text-purple-800">Chats for: {post.title}</h3>
+                        {chats.length === 0 ? <p className="text-slate-400">No chats for this post yet.</p> : (
+                          <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(220px,0.9fr)]">
+                            <div className="min-w-0">
                               {chats.map(chat => (
-                                <div key={chat.id} className={`mb-2 cursor-pointer ${selectedChat?.id === chat.id ? 'bg-indigo-100 border-indigo-300' : 'bg-gray-50 border-gray-100'} rounded-lg p-2 border transition-colors`} onClick={() => setSelectedChat(chat)}>
-                                  Purchaser: {chat.userId}
+                                <div key={chat.id} className={`mb-2 cursor-pointer ${selectedChat?.id === chat.id ? 'border-purple-300 bg-purple-50' : 'border-slate-100 bg-slate-50'} rounded-lg border p-2 transition-colors`} onClick={() => setSelectedChat(chat)}>
+                                  <div className="text-xs font-semibold uppercase tracking-[0.16em] text-purple-700">Purchaser</div>
+                                  <div className="mt-1 break-all text-sm font-medium text-slate-800">{getPurchaserLabel(chat.userId)}</div>
                                 </div>
                               ))}
                             </div>
                             <div className="flex-1 flex flex-col">
                               {selectedChat ? (
                                 <>
-                                  <div className="flex-1 flex flex-col justify-end overflow-y-auto mb-3 bg-gray-50 rounded-lg p-3 border border-gray-100 shadow-inner min-h-[150px] max-h-[250px]">
-                                    {messages.length === 0 ? <p className="text-gray-400 text-center mt-8">No messages yet.</p> :
+                                  <div className="mb-3 flex max-h-[250px] min-h-[150px] flex-1 flex-col justify-end overflow-y-auto rounded-lg border border-slate-100 bg-slate-50 p-3 shadow-inner">
+                                    {messages.length === 0 ? <p className="mt-8 text-center text-slate-400">No messages yet.</p> :
                                       messages.map((msg, idx) => (
                                         <div key={idx} className={`mb-3 flex ${msg.sender === currentUser.uid ? 'justify-end' : 'justify-start'}`}>
                                           <div className="max-w-[70%]">
-                                            <div className={`text-xs mb-1 ${msg.sender === currentUser.uid ? 'text-indigo-500 text-right' : 'text-gray-500 text-left'}`}>{msg.sender === currentUser.uid ? 'You:' : 'Purchaser:'}</div>
-                                            <span className={`inline-block rounded-2xl px-4 py-2 font-medium shadow-md break-words transition-all ${msg.sender === currentUser.uid ? 'bg-indigo-600 text-white rounded-br-none' : 'bg-indigo-100 text-gray-900 rounded-bl-none'}`}>{msg.text}</span>
+                                            <div className={`mb-1 text-xs ${msg.sender === currentUser.uid ? 'text-right text-purple-700' : 'text-left text-slate-500'}`}>{msg.sender === currentUser.uid ? 'You:' : getPurchaserLabel(selectedChat.userId)}</div>
+                                            <span className={`inline-block rounded-2xl px-4 py-2 font-medium shadow-md break-words transition-all ${msg.sender === currentUser.uid ? 'bg-purple-700 text-white rounded-br-none' : 'border border-slate-200 bg-white text-slate-900 rounded-bl-none'}`}>{msg.text}</span>
                                           </div>
                                         </div>
                                       ))
@@ -124,19 +144,19 @@ export default function MyPostsPage() {
                                       value={input}
                                       onChange={e => setInput(e.target.value)}
                                       placeholder="Type your message..."
-                                      className="flex-1 rounded-xl border border-gray-300 px-4 py-3 text-base focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all shadow-sm bg-white"
+                                      className="ff-input flex-1 px-4 py-3 text-base"
                                       onKeyDown={e => { if (e.key === 'Enter') sendMessage(); }}
                                     />
                                     <button
                                       onClick={sendMessage}
-                                      className="rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-white font-semibold shadow-lg hover:from-indigo-600 hover:to-purple-600 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                                      className="ff-button-primary rounded-xl px-6 py-3 font-semibold"
                                     >
                                       Send
                                     </button>
                                   </div>
                                 </>
                               ) : (
-                                <div className="text-gray-400 mt-10 text-center">Select a chat to view messages.</div>
+                                <div className="mt-10 text-center text-slate-400">Select a chat to view messages.</div>
                               )}
                             </div>
                           </div>

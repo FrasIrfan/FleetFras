@@ -37,25 +37,25 @@ export default function CreatePostPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-blue-100 to-purple-100 flex flex-col items-center py-8 px-2 sm:px-4">
+    <div className="ff-page flex flex-col items-center">
       <div className="w-full max-w-lg mx-auto">
-        <div className="rounded-2xl bg-white shadow-2xl p-6 sm:p-10">
-          <h1 className="mb-6 text-2xl sm:text-3xl font-bold text-indigo-700 text-center tracking-tight drop-shadow">Create New Post</h1>
+        <div className="ff-shell">
+          <h1 className="ff-title mb-6 text-center">Create New Post</h1>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block mb-2 text-gray-700 font-semibold">Title</label>
+              <label className="mb-2 block font-semibold text-slate-700">Title</label>
               <input
                 type="text"
                 value={title}
                 onChange={e => setTitle(e.target.value)}
                 required
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-base bg-gray-50 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all shadow-sm"
+                className="ff-input w-full px-4 py-3 text-base"
               />
             </div>
             <div>
-              <label className="block mb-2 text-gray-700 font-semibold">Price (USD)</label>
+              <label className="mb-2 block font-semibold text-slate-700">Price (USD)</label>
               <div className="flex items-center">
-                <span className="text-lg text-indigo-600 font-bold mr-2">$</span>
+                <span className="mr-2 text-lg font-bold text-purple-700">$</span>
                 <input
                   type="number"
                   min="0"
@@ -63,24 +63,24 @@ export default function CreatePostPage() {
                   value={price}
                   onChange={e => setPrice(e.target.value)}
                   required
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-base bg-gray-50 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all shadow-sm"
+                  className="ff-input flex-1 px-4 py-3 text-base"
                 />
               </div>
             </div>
             <div>
-              <label className="block mb-2 text-gray-700 font-semibold">Description</label>
+              <label className="mb-2 block font-semibold text-slate-700">Description</label>
               <textarea
                 value={description}
                 onChange={e => setDescription(e.target.value)}
                 required
                 rows={4}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-base bg-gray-50 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all shadow-sm resize-vertical"
+                className="ff-input w-full resize-vertical px-4 py-3 text-base"
               />
             </div>
             <button
               type="submit"
               disabled={loading}
-              className={`w-full rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-white font-semibold shadow-lg hover:from-indigo-600 hover:to-purple-600 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+              className={`ff-button-primary w-full px-6 py-3 font-semibold ${loading ? 'cursor-not-allowed opacity-70' : ''}`}
             >
               {loading ? 'Creating...' : 'Create Post'}
             </button>

@@ -42,19 +42,19 @@ export default function PurchaserChatWithRenterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-blue-100 to-purple-100 flex flex-col items-center py-8 px-2 sm:px-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-4 sm:p-8 flex flex-col h-[600px]">
-        <h2 className="mb-4 text-2xl font-bold text-indigo-600 text-center tracking-tight drop-shadow-sm">Chat with Renter</h2>
+    <div className="ff-page flex flex-col items-center">
+      <div className="ff-shell-narrow flex h-[600px] max-w-md flex-col">
+        <h2 className="mb-4 text-center text-2xl font-semibold text-slate-900">Chat with Renter</h2>
         {post && (
-          <div className="mb-4 bg-gray-50 rounded-lg p-4 border border-gray-100 shadow-inner animate-fade-in">
-            <div className="font-bold text-indigo-600 text-lg mb-1">${post.price}</div>
-            <div className="font-semibold text-gray-900 mb-1">{post.title}</div>
-            <div className="text-gray-600 text-sm">{post.description}</div>
+          <div className="animate-fade-in mb-4 rounded-lg border bg-slate-50 p-4 shadow-inner" style={{ borderColor: 'var(--ff-border)' }}>
+            <div className="mb-1 text-lg font-bold text-purple-700">${post.price}</div>
+            <div className="mb-1 font-semibold text-slate-950">{post.title}</div>
+            <div className="text-sm text-slate-600">{post.description}</div>
           </div>
         )}
-        <div className="flex-1 overflow-y-auto mb-4 bg-gray-50 rounded-lg p-3 border border-gray-100 shadow-inner">
+        <div className="mb-4 flex-1 overflow-y-auto rounded-lg border bg-slate-50 p-3 shadow-inner" style={{ borderColor: 'var(--ff-border)' }}>
           {messages.length === 0 ? (
-            <p className="text-gray-400 text-center mt-8">No messages yet.</p>
+            <p className="mt-8 text-center text-slate-400">No messages yet.</p>
           ) : (
             messages.map((msg, idx) => (
               <div
@@ -62,12 +62,12 @@ export default function PurchaserChatWithRenterPage() {
                 className={`mb-3 flex transition-all duration-300 ease-in-out animate-fade-in ${msg.sender === currentUser?.uid ? 'justify-end' : 'justify-start'}`}
               >
                 <div className="max-w-[70%]">
-                  <div className={`text-xs mb-1 ${msg.sender === currentUser?.uid ? 'text-indigo-500 text-right' : 'text-gray-500 text-left'}`}>{msg.sender === currentUser?.uid ? 'You:' : 'Renter:'}</div>
+                  <div className={`mb-1 text-xs ${msg.sender === currentUser?.uid ? 'text-right text-purple-700' : 'text-left text-slate-500'}`}>{msg.sender === currentUser?.uid ? 'You:' : 'Renter:'}</div>
                   <span
                     className={`inline-block rounded-2xl px-4 py-2 font-medium shadow-md break-words transition-all duration-300 ease-in-out ${
                       msg.sender === currentUser?.uid
-                        ? 'bg-indigo-600 text-white rounded-br-none'
-                        : 'bg-indigo-100 text-gray-900 rounded-bl-none'
+                        ? 'bg-purple-700 text-white rounded-br-none'
+                        : 'border border-slate-200 bg-white text-slate-900 rounded-bl-none'
                     }`}
                   >
                     {msg.text}
@@ -78,18 +78,18 @@ export default function PurchaserChatWithRenterPage() {
           )}
           <div ref={messagesEndRef} />
         </div>
-        <div className="flex gap-2 mt-2 text-black">
+        <div className="mt-2 flex gap-2 text-black">
           <input
             type="text"
             value={input}
             onChange={e => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 rounded-xl border border-gray-300 px-4 py-3 text-base focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all shadow-sm bg-white"
+            className="ff-input flex-1 px-4 py-3 text-base"
             onKeyDown={e => { if (e.key === 'Enter') sendMessage(); }}
           />
           <button
             onClick={sendMessage}
-            className="rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-white font-semibold shadow-lg hover:from-indigo-600 hover:to-purple-600 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400 active:scale-95"
+            className="ff-button-primary rounded-xl px-6 py-3 font-semibold active:scale-95"
           >
             Send
           </button>

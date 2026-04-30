@@ -8,8 +8,8 @@
 }
 
 .auth-form-input:focus {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: none;
+  box-shadow: var(--ff-shadow-sm);
 }
 
 .auth-form-button {
@@ -18,7 +18,7 @@
 
 .auth-form-button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--ff-shadow-sm);
 }
 
 .auth-form-button:active {
@@ -72,7 +72,7 @@
 
 /* Custom gradient background */
 .auth-gradient-bg {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: var(--ff-surface-strong);
 }
 
 /* Custom card hover effect */
@@ -81,8 +81,8 @@
 }
 
 .auth-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: none;
+  box-shadow: var(--ff-shadow-md);
 }
 
 /* Custom input focus ring */
@@ -91,8 +91,8 @@
 }
 
 .auth-input-focus:focus {
-  border-color: #4f46e5;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  border-color: var(--ff-brand);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.16);
 }
 
 /* Loading spinner animation */
@@ -111,8 +111,8 @@
 }
 
 .auth-checkbox:checked {
-  background-color: #4f46e5;
-  border-color: #4f46e5;
+  background-color: var(--ff-brand);
+  border-color: var(--ff-brand);
 }
 
 /* Custom select style */
@@ -121,6 +121,6 @@
 }
 
 .auth-select:focus {
-  border-color: #4f46e5;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  border-color: var(--ff-brand);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.16);
 } 

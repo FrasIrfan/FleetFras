@@ -51,12 +51,21 @@ export default function PurchaserChatPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-blue-100 to-purple-100 flex flex-col items-center py-8 px-2 sm:px-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-4 sm:p-8 flex flex-col h-[600px]">
-        <h2 className="mb-4 text-2xl font-bold text-indigo-600 text-center tracking-tight drop-shadow-sm">Support Chat</h2>
-        <div className="flex-1 flex flex-col justify-end overflow-y-auto mb-4 bg-gray-50 rounded-lg p-3 border border-gray-100 shadow-inner">
+    <div className="ff-page flex flex-col items-center">
+      <div className="ff-shell flex min-h-[720px] max-w-3xl flex-col p-0">
+        <div className="border-b px-6 py-6 sm:px-8" style={{ borderColor: 'var(--ff-border)' }}>
+          <p className="ff-kicker mb-2">Support</p>
+          <h2 className="text-3xl font-semibold tracking-[-0.04em] text-slate-950">Support Chat</h2>
+          <p className="mt-2 text-sm text-slate-500">Send a message to the FleetFras admin team.</p>
+        </div>
+        <div className="flex flex-1 flex-col bg-slate-50/70 p-4 sm:p-6">
+          <div className="mb-4 flex flex-1 flex-col justify-end overflow-y-auto rounded-[24px] border bg-white p-5 shadow-inner" style={{ borderColor: 'var(--ff-border)' }}>
           {messages.length === 0 ? (
-            <p className="text-gray-400 text-center mt-8">No messages yet.</p>
+            <div className="mx-auto my-auto max-w-sm text-center">
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-50 text-xl">💬</div>
+              <p className="text-lg font-semibold text-slate-800">No messages yet</p>
+              <p className="mt-2 text-sm leading-6 text-slate-500">Start the conversation and your messages will appear here.</p>
+            </div>
           ) : (
             messages.map((msg, idx) => (
               <div
@@ -64,12 +73,12 @@ export default function PurchaserChatPage() {
                 className={`mb-3 flex ${msg.sender === 'purchaser' ? 'justify-end' : 'justify-start'}`}
               >
                 <div className="max-w-[70%]">
-                  <div className={`text-xs mb-1 ${msg.sender === 'purchaser' ? 'text-indigo-500 text-right' : 'text-gray-500 text-left'}`}>{msg.sender === 'purchaser' ? 'You:' : 'Admin:'}</div>
+                  <div className={`mb-1 text-xs ${msg.sender === 'purchaser' ? 'text-right text-purple-700' : 'text-left text-slate-500'}`}>{msg.sender === 'purchaser' ? 'You:' : 'Admin:'}</div>
                   <span
-                    className={`inline-block rounded-2xl px-4 py-2 font-medium shadow-md break-words transition-all ${
+                    className={`inline-block rounded-3xl px-4 py-3 text-sm font-medium shadow-sm break-words transition-all ${
                       msg.sender === 'purchaser'
-                        ? 'bg-indigo-600 text-white rounded-br-none'
-                        : 'bg-indigo-100 text-gray-900 rounded-bl-none'
+                        ? 'bg-purple-700 text-white rounded-br-none'
+                        : 'border border-slate-200 bg-white text-slate-900 rounded-bl-none'
                     }`}
                   >
                     {msg.text}
@@ -80,21 +89,22 @@ export default function PurchaserChatPage() {
           )}
           <div ref={messagesEndRef} />
         </div>
-        <div className="flex gap-2 mt-2 text-black">
+        <div className="flex gap-3 rounded-[24px] border bg-white p-3 text-black shadow-sm" style={{ borderColor: 'var(--ff-border)' }}>
           <input
             type="text"
             value={input}
             onChange={e => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 rounded-xl border border-gray-300 px-4 py-3 text-base focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all shadow-sm bg-white"
+            className="ff-input flex-1 border-0 bg-slate-50 px-4 py-3 text-base focus:ring-0"
             onKeyDown={e => { if (e.key === 'Enter') sendMessage(); }}
           />
           <button
             onClick={sendMessage}
-            className="rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3 text-white font-semibold shadow-lg hover:from-indigo-600 hover:to-purple-600 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="ff-button-primary rounded-2xl px-6 py-3 font-semibold"
           >
             Send
           </button>
+        </div>
         </div>
       </div>
     </div>

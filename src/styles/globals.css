@@ -3,26 +3,146 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --ff-bg: #f5f3ff;
+  --ff-surface: #ffffff;
+  --ff-surface-muted: #faf8ff;
+  --ff-surface-strong: #0f172a;
+  --ff-border: #ddd6fe;
+  --ff-text: #111827;
+  --ff-text-muted: #625f70;
+  --ff-brand: #7c3aed;
+  --ff-brand-hover: #6d28d9;
+  --ff-brand-soft: #ede9fe;
+  --ff-brand-ink: #4c1d95;
+  --ff-danger: #dc2626;
+  --ff-danger-hover: #b91c1c;
+  --ff-success: #15803d;
+  --ff-warning: #b45309;
+  --ff-radius-md: 10px;
+  --ff-radius-lg: 16px;
+  --ff-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --ff-shadow-md: 0 20px 50px rgba(15, 23, 42, 0.08);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ff-bg);
+  color: var(--ff-text);
+  font-family: "Plus Jakarta Sans", "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .ff-page {
+    @apply min-h-screen px-4 py-10 sm:px-6 md:px-8;
+    background: var(--ff-bg);
+  }
+
+  .ff-shell {
+    @apply mx-auto w-full max-w-6xl rounded-[var(--ff-radius-lg)] border p-6 sm:p-8;
+    background: var(--ff-surface);
+    border-color: var(--ff-border);
+    box-shadow: var(--ff-shadow-md);
+  }
+
+  .ff-shell-narrow {
+    @apply mx-auto w-full max-w-2xl rounded-[var(--ff-radius-lg)] border p-6 sm:p-8;
+    background: var(--ff-surface);
+    border-color: var(--ff-border);
+    box-shadow: var(--ff-shadow-md);
+  }
+
+  .ff-title {
+    @apply text-3xl font-semibold tracking-[-0.03em] sm:text-4xl;
+    color: var(--ff-text);
+  }
+
+  .ff-subtitle {
+    @apply text-sm leading-6 sm:text-base;
+    color: var(--ff-text-muted);
+  }
+
+  .ff-card {
+    @apply rounded-[var(--ff-radius-md)] border p-5 transition;
+    background: var(--ff-surface-muted);
+    border-color: var(--ff-border);
+    box-shadow: var(--ff-shadow-sm);
+  }
+
+  .ff-card:hover {
+    border-color: #c4b5fd;
+  }
+
+  .ff-button-primary {
+    @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white transition focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2;
+    background: var(--ff-brand);
+  }
+
+  .ff-button-primary:hover {
+    background: var(--ff-brand-hover);
+  }
+
+  .ff-button-danger {
+    @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white transition focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
+    background: var(--ff-danger);
+  }
+
+  .ff-button-danger:hover {
+    background: var(--ff-danger-hover);
+  }
+
+  .ff-button-secondary {
+    @apply inline-flex items-center justify-center rounded-full border px-5 py-2.5 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2;
+    color: var(--ff-brand-ink);
+    background: var(--ff-surface);
+    border-color: #c4b5fd;
+  }
+
+  .ff-button-secondary:hover {
+    background: var(--ff-brand-soft);
+  }
+
+  .ff-input {
+    @apply w-full rounded-xl border px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/30;
+    border-color: var(--ff-border);
+    background: var(--ff-surface);
+  }
+
+  .ff-input:focus {
+    border-color: var(--ff-brand);
+  }
+
+  .ff-status-chip {
+    @apply rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em];
+  }
+
+  .ff-fab {
+    @apply fixed bottom-4 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full text-2xl text-white shadow-lg transition hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2 sm:bottom-8 sm:right-8 sm:h-16 sm:w-16 sm:text-3xl;
+    background: var(--ff-brand);
+  }
+
+  .ff-page-header {
+    @apply mb-8 flex flex-col gap-3 border-b pb-6 sm:flex-row sm:items-end sm:justify-between;
+    border-color: var(--ff-border);
+  }
+
+  .ff-kicker {
+    @apply mb-3 text-xs font-bold uppercase tracking-[0.22em];
+    color: var(--ff-brand);
+  }
+
+  .ff-auth-page {
+    @apply min-h-screen px-5 py-8;
+    background:
+      radial-gradient(circle at 10% 10%, rgba(124, 58, 237, 0.16), transparent 28rem),
+      linear-gradient(135deg, #fbfaff 0%, #f5f3ff 48%, #ede9fe 100%);
+  }
+
+  .ff-auth-shell {
+    @apply mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-6xl items-center gap-8 lg:grid-cols-[0.95fr_1.05fr];
+  }
+
+  .ff-auth-panel {
+    @apply rounded-[28px] border bg-white p-6 shadow-[0_30px_80px_rgba(15,23,42,0.10)] sm:p-8;
+    border-color: var(--ff-border);
+  }
 }

@@ -56,37 +56,62 @@ export default function AdminDashboardPage() {
   console.log('[AdminDashboard] currentUser:', currentUser);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-2 md:p-6 flex flex-col items-center">
-      <div className="w-full max-w-2xl md:max-w-3xl bg-white rounded-2xl shadow-xl p-4 md:p-8 mt-4">
-        <h1 className="mb-2 text-xl md:text-2xl font-bold text-gray-900">Welcome to the Admin Dashboard!</h1>
-        <p className="mb-6 text-gray-700">Your role: <span className="font-semibold">admin</span></p>
-        <div className="mb-6">
+    <div className="ff-page">
+      <div className="ff-shell mt-2 md:mt-4">
+        <div className="ff-page-header">
+          <div>
+            <p className="ff-kicker">Admin workspace</p>
+            <h1 className="ff-title">Review activity with clarity.</h1>
+            <p className="ff-subtitle mt-3">Your role: <span className="font-semibold text-slate-800">admin</span></p>
+          </div>
+          <div>
+            <button
+              className="ff-button-primary w-full md:w-auto"
+              onClick={() => router.push('/admin/posts')}
+            >
+              Manage Posts
+            </button>
+          </div>
+        </div>
+        <div className="mb-8 grid gap-4 sm:grid-cols-2">
+          <div className="ff-card">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-purple-700">Requests</p>
+            <h2 className="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">Role Switches</h2>
+            <p className="mt-2 text-sm leading-6 text-slate-600">Approve or reject renter access requests from purchasers.</p>
+          </div>
+          <div className="ff-card">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-purple-700">Content</p>
+            <h2 className="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">Post Review</h2>
+            <p className="mt-2 text-sm leading-6 text-slate-600">Keep marketplace listings clean through approval actions.</p>
+          </div>
+        </div>
+        <div className="mb-6 hidden">
           <button
-            className="px-4 py-2 text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg font-medium w-full md:w-auto"
+            className="ff-button-primary w-full md:w-auto"
             onClick={() => router.push('/admin/posts')}
           >
             📝 Manage Posts
           </button>
         </div>
         <div>
-          <h2 className="mb-4 text-lg font-semibold text-gray-900">Role Switch Requests</h2>
-          <div className="overflow-x-auto rounded-lg border border-gray-200 bg-gray-50">
+          <h2 className="mb-4 text-lg font-semibold text-slate-900">Role Switch Requests</h2>
+          <div className="overflow-x-auto rounded-lg border bg-slate-50" style={{ borderColor: 'var(--ff-border)' }}>
             {loading ? (
-              <p className="p-4 text-center text-gray-500">Loading requests...</p>
+              <p className="p-4 text-center text-slate-500">Loading requests...</p>
             ) : requests.length === 0 ? (
-              <p className="p-4 text-center text-gray-500">No role switch requests found.</p>
+              <p className="p-4 text-center text-slate-500">No role switch requests found.</p>
             ) : (
               <table className="min-w-full text-sm text-left">
                 <thead>
-                  <tr className="bg-gray-100">
-                    <th className="px-4 py-2 font-semibold text-gray-700">Email</th>
-                    <th className="px-4 py-2 font-semibold text-gray-700">Status</th>
-                    <th className="px-4 py-2 font-semibold text-gray-700">Actions</th>
+                  <tr className="bg-slate-100">
+                    <th className="px-4 py-2 font-semibold text-slate-700">Email</th>
+                    <th className="px-4 py-2 font-semibold text-slate-700">Status</th>
+                    <th className="px-4 py-2 font-semibold text-slate-700">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {requests.map((req, idx) => (
-                    <tr key={req.id} className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <tr key={req.id} className={idx % 2 === 0 ? "bg-white" : "bg-slate-50"}>
                       <td className="px-4 py-2 break-all text-black">{req.email}</td>
                       <td className={`px-4 py-2 font-semibold ${req.status === 'approved' ? 'text-green-600' : req.status === 'rejected' ? 'text-red-600' : 'text-orange-500'}`}>
                         {req.status.charAt(0).toUpperCase() + req.status.slice(1)}
@@ -94,15 +119,12 @@ export default function AdminDashboardPage() {
                       <td className="px-4 py-2 space-x-2">
                         {req.status === 'pending' && (
                           <>
-                            <button
-                              onClick={() => handleApprove(req)}
-                              className="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md mb-1 md:mb-0"
-                            >
+                            <button onClick={() => handleApprove(req)} className="ff-button-primary mb-1 px-3 py-1 md:mb-0">
                               Approve
                             </button>
                             <button
                               onClick={() => handleReject(req)}
-                              className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-md"
+                              className="ff-button-danger px-3 py-1"
                             >
                               Reject
                             </button>
@@ -117,28 +139,9 @@ export default function AdminDashboardPage() {
           </div>
         </div>
       </div>
-      <div style={{
-        position: 'fixed',
-        bottom: 32,
-        right: 32,
-        zIndex: 1000
-      }}>
+      <div>
         <button
-          style={{
-            background: '#4f46e5',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '50%',
-            width: 60,
-            height: 60,
-            fontSize: 28,
-            boxShadow: '0 4px 16px rgba(79,70,229,0.15)',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontWeight: 700
-          }}
+          className="ff-fab"
           onClick={() => {
             console.log('[AdminDashboard] Floating chat button clicked');
             router.push('/admin/chats').catch((err) => {

@@ -17,11 +17,12 @@ function Navbar() {
     router.push('/login');
   };
   return (
-    <nav className="w-full bg-white border-b border-gray-200 px-2 py-2 md:px-8 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+    <nav className="sticky top-0 z-50 flex w-full items-center justify-between border-b bg-white/90 px-4 py-3 backdrop-blur md:px-8" style={{ borderColor: 'var(--ff-border)' }}>
       <div className="flex items-center gap-2 md:gap-4">
 
         <button
-          className="hidden md:inline-flex items-center justify-center p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-300"
+          className="hidden rounded-full border p-2 text-slate-500 transition hover:border-purple-200 hover:bg-purple-50 hover:text-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500/30 md:inline-flex"
+          style={{ borderColor: 'var(--ff-border)' }}
           onClick={() => router.back()}
           title="Back"
         >
@@ -31,7 +32,8 @@ function Navbar() {
           </svg>
         </button>
         <button
-          className="hidden md:inline-flex items-center justify-center p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-300"
+          className="hidden rounded-full border p-2 text-slate-500 transition hover:border-purple-200 hover:bg-purple-50 hover:text-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500/30 md:inline-flex"
+          style={{ borderColor: 'var(--ff-border)' }}
           onClick={() => window.history.forward()}
           title="Forward"
         >
@@ -41,20 +43,21 @@ function Navbar() {
           </svg>
         </button>
         <div
-          className="font-bold text-indigo-700 text-xl cursor-pointer ml-2 md:ml-4"
+          className="ml-2 cursor-pointer text-xl font-semibold tracking-[-0.04em] text-slate-950 md:ml-4"
           onClick={() => router.push('/')}
         >
-          FleetFras
+          Fleet<span className="text-purple-700">Fras</span>
         </div>
       </div>
       {currentUser && (
         <div className="flex items-center gap-2 md:gap-4">
-          <div className="hidden sm:flex flex-col md:flex-row items-center gap-1 bg-gray-100 rounded-md px-3 py-1 border border-gray-200 text-gray-900 text-sm font-medium">
+          <div className="hidden rounded-full border bg-slate-50 px-4 py-2 text-sm font-medium text-slate-900 sm:flex sm:flex-col sm:items-center sm:gap-1 md:flex-row" style={{ borderColor: 'var(--ff-border)' }}>
             <span className="font-semibold">{currentUser.displayName || 'No Name'}</span>
-            <span className="text-indigo-600 text-xs md:ml-2 break-all">{currentUser.email}</span>
+            <span className="break-all text-xs text-slate-500 md:ml-2">{currentUser.email}</span>
           </div>
           <button
-            className="inline-flex items-center justify-center p-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-600 md:bg-indigo-600 md:hover:bg-indigo-700 md:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="inline-flex items-center justify-center rounded-full border p-2 text-purple-700 transition hover:bg-purple-50 focus:outline-none focus:ring-2 focus:ring-purple-500/30 md:border-0 md:bg-purple-600 md:text-white md:hover:bg-purple-700"
+            style={{ borderColor: 'var(--ff-border)' }}
             onClick={() => router.push('/')}
             title="Home"
           >
@@ -63,7 +66,8 @@ function Navbar() {
             </svg>
           </button>
           <button
-            className="inline-flex items-center justify-center p-2 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 md:bg-red-600 md:hover:bg-red-700 md:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-red-400 ml-1"
+            className="ml-1 inline-flex items-center justify-center rounded-full border p-2 text-red-700 transition hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-400 md:border-0 md:bg-red-600 md:text-white md:hover:bg-red-700"
+            style={{ borderColor: 'var(--ff-border)' }}
             onClick={handleLogout}
             title="Logout"
           >
